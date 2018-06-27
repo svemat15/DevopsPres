@@ -1,39 +1,12 @@
+#!groovy
+
 pipeline {
     agent any
 
-    tools{
-        maven 'Maven 3.3.9'
-        jdk 'jdk8'
-    }
-
-    stages {
-        stage('Initialize') {
-            steps {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-            }
-        }
-        stage('Build') {
-            steps {
-                sh 'mvn install'
-            }
-        }
-        stage('Ansible'){
+    stages{
+        stage('build')  {
             steps{
-                ansiblePlaybook playbook:'./playbook.yml'
-            }
-        }
-        /*stage('Docker'){
-            steps{
-                sh 'docker build . -t helloworld'
-            }
-        }*/
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-                sh 'gcloud app deploy'
+                sh('echo "Hello World"')
             }
         }
     }
